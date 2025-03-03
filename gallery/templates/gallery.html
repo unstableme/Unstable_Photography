@@ -1,0 +1,112 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Photography Gallery</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/igpage.css' %}">
+    <link rel="icon" href="{% static 'favicon.ico' %}" type="image/x-icon">
+    <script src="{% static 'js/script.js' %}" defer></script>
+</head>
+<body>
+
+    <!-- Sidebar -->
+    <div class="sidebar">
+        <a href="#" data-page="home" onclick="loadContent('home')">Home</a>
+        <a href="#" data-page="camera" onclick="loadContent('camera')">Camera</a>
+        <a href="#" data-page="about" onclick="loadContent('about')">About</a>
+        <a href="#" data-page="contact" onclick="loadContent('contact')">Contact</a>
+        <a href="https://santoshsapkota02.com.np/" target="_blank">Prof. Website</a>
+    </div>
+    
+
+    <div class="top-bar">
+        <div class="animated-text-container">
+            <h1 class='animated-text'>Welcome to Unstable Photography!!</h1>
+        </div>
+        <div class='menu-sort-container'>
+          <button id="menu-button" class="menu-icon">☰</button> 
+           <div class="sort-buttons">
+              <button onclick="window.location.href='?sort=location'">Sort by Location</button>
+              <button onclick="window.location.href='?sort=category'">Sort by Category</button>
+           </div>
+        </div>   
+    </div>
+
+    <!-- Main Content -->
+    <div id="main-content">
+        
+    
+
+    <!-- Home Gallery -->
+    <div id="gallery-container">
+        <div class="gallery" id="gallery">
+            {% for group, images in grouped_photos.items %}
+            <div class="gallery-group">
+                <div class="folder" data-name="{{ group }}">
+                    <img src="{{ images.0.image.url }}" alt="{{ group }}" class="folder-thumbnail"> 
+                    <h2>{{ group }}</h2>
+                </div>
+                <div class="gallery-items" id="group-{{ group }}" style="display: none;">
+                    {% for image in images %}
+                    <div class="gallery-item">
+                        <img src="{{ image.image.url }}" alt="{{ image.title }}">
+                        <div class="content">
+                            <h3>{{ image.title }}</h3>
+                            <p>{{ image.description }}</p>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Camera Section -->
+<div id="camera-section" style="display: none;">
+    <h1>Camera I used for Photography:</h1>
+    <div class="camera-gallery">
+        <div class="camera-item">
+            <img src="{% static 'images/One Plus Nord CE 5G.png' %}" alt="Camera 1">
+            <p>Camera 1: One Plus Nord CE 5G</p>
+        </div>
+        <div class="camera-item">
+            <img src="{% static 'images\Oppo_A37F.png' %}" alt="Camera 2">
+            <p>Camera 2: Oppo A37F</p>
+        </div>
+    </div>
+</div>
+
+<!-- About Section -->
+<div id="about-section" style="display: none;">
+    <h1>About</h1>
+    <p>This is a photography gallery showcasing amazing pictures captured using different cameras.</p>
+</div>
+
+<!-- Contact Section -->
+<div id="contact-section" style="display: none;">
+    <h1>Contact</h1>
+    <p><b>Email:</b> unstableme02@gmail.com</p>
+    <p><b>Phone:</b> +977-98403669_ _ Last 2 digits removed for security purpose ;)</p>
+
+    <p><b>Instagram:</b> <a href='https://www.instagram.com/unstableme02' target='blank'>Follow Me</a></p>
+</div>
+</div>
+
+<!-- Image Modal -->
+<div id="imageModal" class="modal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="modalImage">
+    <div class="modal-navigation">
+        <button id="prevBtn">&#10094;</button>
+        <button id="nextBtn">&#10095;</button>
+    </div>
+</div>
+
+
+
+</body>
+</html>

@@ -1,0 +1,660 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f5f5f5;
+    color: #333;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+    overflow-x: hidden;
+    /* Prevent horizontal scrolling across the entire page */
+}
+
+
+/* Sidebar Styles */
+.sidebar {
+    position: fixed;
+    left: 0;
+    top: 0;
+    height: 100%;
+    width: 180px;
+    background: #212121;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    z-index: 2;
+}
+
+.sidebar a {
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.2rem;
+    transition: color 0.3s ease;
+}
+
+.sidebar a:hover {
+    color: #ff5722;
+}
+
+/* Top Bar */
+.top-bar {
+    position: fixed;
+    top: 0;
+    left: 180px;
+    /* Starts after the sidebar */
+    width: calc(100% - 180px);
+    /* Remaining width after the sidebar */
+    height: 50px;
+    background-color: #bcd7eb;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0px 20px;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 10;
+}
+
+/* Title inside Top Bar */
+.top-bar h1 {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #333;
+}
+
+/* Adjusted Sort Buttons */
+.sort-buttons {
+    position: relative;
+    /* Changed from absolute */
+    top: auto;
+    right: auto;
+    display: flex;
+    gap: 10px;
+}
+
+.sort-buttons button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: #ff5722;
+    color: white;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.3s ease;
+}
+
+.sort-buttons button:hover {
+    background-color: #e64a19;
+}
+
+/* Wrapper to clip animation */
+.animated-text-container {
+    flex-grow: 1;
+    margin-top: -3px;
+    left: 10px; /* Exactly at the sidebar's edge */
+    width: max-content;
+    overflow: hidden;
+    height: 100%; /* Prevents overlap */
+    display: flex;
+    align-items: center; /* Ensures text stays aligned properly */
+    pointer-events: none; /* Prevents interaction issues */
+}
+
+/* Slide-in from the left */
+.animated-text {
+    display: inline-block;
+    position: relative;
+    font-size: 24px;
+    font-weight: bold;
+    overflow: visible;
+    white-space: nowrap;
+    opacity: 0;
+    left: 0;
+    transform: translateX(-100%);
+    animation: slideIn 1.5s ease-out forwards;
+    z-index: 1;
+}
+
+/* Sparkling effect */
+.animated-text::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(120deg, rgba(255, 215, 0, 0.0) 48%,
+            rgba(255, 215, 0, 0.8) 50%,
+            rgba(255, 215, 0, 0.0) 52%);
+    mix-blend-mode: screen;
+    animation: sparkleMove 2.5s ease-out forwards;
+    animation-delay: 1.5s;
+}
+
+/* Slide-in animation */
+@keyframes slideIn {
+    from {
+        transform: translateX(-100%);
+        opacity: 0;
+    }
+
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Gold sparkle moving from left to right */
+@keyframes sparkleMove {
+    from {
+        left: -100%;
+    }
+
+    to {
+        left: 100%;
+    }
+
+    0% {
+        left: -100%;
+        opacity: 1;
+    }
+
+    80% {
+        left: 100%;
+        opacity: 1;
+    }
+
+    100% {
+        left: 100%;
+        opacity: 0;
+    }
+
+    /* Fade out at the end */
+}
+
+
+
+
+
+
+/* Specific Sections */
+#camera-section,
+#about-section,
+#contact-section {
+    display: none;
+    /* Initially hidden */
+    margin-left: 270px;
+    /* Align with main content */
+    margin-top: 80px;
+    padding: 20px;
+    box-sizing: border-box;
+}
+
+#camera-section h1 {
+    text-align: center;
+}
+
+
+/* 📷 Camera Section Styling */
+.camera-gallery {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    /* Space between boxes */
+    flex-wrap: wrap;
+    margin-top: 20px;
+}
+
+.camera-item {
+    width: 300px;
+    height: 300px;
+    background-color: #f4f4f4;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 10px;
+    border-radius: 10px;
+    box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.camera-item img {
+    width: 80%;
+    height: 80%;
+    border-radius: 5px;
+}
+
+/* Gallery Styles */
+.gallery {
+    margin-left: 200px;
+    /* Adjust for sidebar */
+    padding: 20px;
+    margin-top: 30px;
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    /* Default: 4 columns */
+    gap: 15px;
+    /*width: calc(100vw - 180px); /* Ensures it does not overflow */
+    /*position: relative; /* Keeps it in place */
+    /*overflow-x: hidden;*/
+
+}
+
+.gallery-item {
+    background: #fff;
+    border-radius: 15px;
+    overflow: hidden;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+}
+
+.gallery-item:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.gallery-item img {
+    width: 100%;
+    height: 200px;
+    object-fit: cover;
+    display: block;
+}
+
+.gallery-item .content {
+    padding: 15px;
+}
+
+.gallery-item h3 {
+    font-size: 1.3rem;
+    margin-bottom: 8px;
+}
+
+.gallery-item p {
+    font-size: 0.95rem;
+    color: #666;
+}
+
+/* Gallery Group Styles */
+.gallery-group {
+    width: 100%;
+    height: 100%;
+    display: grid;
+    /* Ensure it's a block element for proper grid alignment */
+    gap: 15px;
+    /* Maintain the gap between items */
+    grid-template-columns: repeat(5, 1fr);
+}
+
+
+
+.folder {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 5px;
+    cursor: pointer;
+    padding: 10px;
+    background-color: #f4f4f4;
+    border-radius: 10px;
+    margin: 10px;
+    position: relative;
+    width: 120px;
+    height: 120px;
+    overflow: hidden;
+    transition: transform 0.2s ease-in-out;
+}
+
+.folder:hover {
+    background-color: #e0e0e0;
+    transform: scale(1.10);
+}
+
+.folder-thumbnail {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 10px;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.folder h2 {
+    font-size: 14px;
+    text-align: center;
+    margin-top: 0px;
+    color: #333;
+}
+
+.folder::after {
+    content: attr(data-name);
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease-in-out;
+}
+
+.folder:hover::after {
+    opacity: 1;
+}
+
+
+
+/* Folder View Styles */
+.gallery-items {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    padding: 20px;
+    padding-right: 80px;
+    width: calc(100vw - 180px);
+    /* Subtract sidebar width */
+    height: auto;
+    overflow-x: visible;
+}
+
+
+.gallery-items .gallery-item {
+    background: #ffffff;
+    border-radius: 15px;
+    overflow: visible;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    cursor: pointer;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 10px;
+    width: 100%;
+    /* Ensure each item takes up full width of its grid cell */
+    max-width: 100%;
+}
+
+.gallery-items .gallery-item:hover {
+    transform: translateY(-8px) scale(1.03);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+
+.gallery-items .gallery-item img {
+    width: 100%;
+    /* Make image fill the container */
+    height: auto;
+    /* Fixed height for consistency */
+    max-height: 300px;
+    object-fit: cover;
+    /* Ensure images maintain aspect ratio */
+    border-radius: 10px;
+}
+
+.gallery-items .gallery-item h3 {
+    font-size: 1.2rem;
+    margin-top: 10px;
+    text-align: center;
+    color: #333;
+}
+
+.gallery-items .gallery-item p {
+    font-size: 0.95rem;
+    color: #666;
+    text-align: center;
+    margin-top: 5px;
+}
+
+/* Modal Styling */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    text-align: center;
+}
+
+.modal-content {
+    max-width: 90%;
+    max-height: 80%;
+    margin-top: 5%;
+    border-radius: 10px;
+}
+
+.close {
+    position: absolute;
+    top: 15px;
+    right: 30px;
+    color: white;
+    font-size: 40px;
+    cursor: pointer;
+}
+
+.modal-navigation {
+    position: absolute;
+    width: 100%;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: space-between;
+}
+
+.modal-navigation button {
+    background: rgba(0, 0, 0, 0.5);
+    border: none;
+    color: white;
+    font-size: 30px;
+    padding: 10px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.modal-navigation button:hover {
+    background: rgba(0, 0, 0, 0.8);
+}
+
+
+
+
+
+/* For Tab & Mobile Devices (small screens) */
+@media screen and (max-width: 768px) {
+
+    .top-bar {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        padding: 10px;
+        width: 100%;
+        background-color: #bcd7eb;
+        margin-left: -180px;
+        margin-top: 1px;
+        padding-top: 15px;
+        height: 80px;
+    }
+
+    .top-bar h1 {
+
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 5px;
+        opacity: 1 !important;
+        visibility: visible !important;
+        display: block !important;
+        position: relative;
+        top: 0;
+        /* Adjust the value to move it down */
+        margin-top: 5px;
+        margin-left: 0;
+        padding-top: 1px;
+    }
+
+    .top-bar .menu-sort-container {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 0 10px;
+        margin-top: -7px;
+        margin-bottom: -20px;
+    }
+
+    .animated-text-container {
+        flex-grow: 1;
+        margin-top: -11px;
+    }    
+
+    /* SIDEBAR */
+    .sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        /* Remove left positioning */
+        width: 250px;
+        height: 100%;
+        background: #333;
+        color: white;
+        transition: transform 0.3s ease-in-out;
+        transform: translateX(-250px);
+        /* Start hidden */
+        padding-top: 60px;
+        z-index: 11;
+    }
+
+    .sidebar.sidebar-open {
+        transform: translateX(0);
+        /* Bring sidebar into view */
+    }
+
+
+    /* MENU BUTTON */
+    .menu-icon {
+        font-size: 24px;
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #333;
+        padding: 10px;
+        padding-bottom: 15px;
+    }
+
+
+    .sort-buttons {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        flex-grow: 1;
+        padding-bottom: 7px;
+    }
+
+    .sort-buttons button {
+        padding: 10px;
+        font-size: 14px;
+    }
+
+
+    .gallery {
+        width: 65%;
+        margin-top: 60px;
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+    .gallery-group {
+        grid-template-columns: repeat(3, 1fr);
+        /* 3 columns */
+    }
+
+
+    .gallery-items {
+        grid-template-columns: 2fr;
+        /* 1 item per row on mobile */
+        gap: 10px;
+        /* Adjust gap for better spacing */
+        padding: 10px;
+        /* Reduce padding for mobile */
+        padding-right: 10px;
+    }
+
+    /* Adjust the gallery-item to take up most of the width */
+    .gallery-items .gallery-item {
+        width: 90%;
+        /* Ensure it fills the width of the container */
+        max-width: 100%;
+        margin-bottom: 10px;
+        /* Space between items */
+    }
+
+    .gallery-items .gallery-item img {
+        width: 100%;
+        /* Make the image fill the width */
+        height: auto;
+        /* Ensure the height adjusts proportionally */
+        max-height: 300px;
+        /* Allow the image to resize */
+        object-fit: cover;
+        /* Keep the aspect ratio */
+    }
+
+}
+
+
+@media screen and (max-width: 768px) {
+
+    #main-content {
+        margin-left: -200px;
+    }
+
+    .gallery-items {
+        width: 100vw;
+    }
+
+    #camera-section,
+    #about-section,
+    #contact-section {
+        margin-left: 200px;
+
+    }
+
+
+}
+
+@media (min-width: 769px) {
+    .menu-icon {
+        display: none !important;
+    }
+}
+
+
+@media screen and (max-width: 480px) {
+    .gallery {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        /* 2 folders per row on mobile */
+        gap: 10px;
+        /* Adjust gap for spacing */
+    }
+
+    .top-bar h1 {
+        font-size: 1.3rem;
+    }
+}
