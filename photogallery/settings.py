@@ -27,6 +27,9 @@ DEBUG = True
 
 ALLOWED_HOSTS = ['unstable-photography.onrender.com', '127.0.0.1', 'localhost', '192.168.101.2','192.168.101.3']
 
+CSRF_TRUSTED_ORIGINS = [
+    "https://unstable-photography.onrender.com",
+]
 
 
 # Application definition
