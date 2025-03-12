@@ -12,6 +12,18 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 
 from pathlib import Path
 
+import cloudinary
+import cloudinary.uploader
+import cloudinary.api
+from django.conf import settings
+
+# Add Cloudinary settings
+cloudinary.config(
+    cloud_name="dv0bqt9da",  # Replace with your Cloudinary Cloud Name
+    api_key="725996933673432",        # Replace with your API Key
+    api_secret="rJgNI9SWzwLF1i2WIXXZdH6w1eM",  # Replace with your API Secret
+)
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -43,7 +55,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'whitenoise.runserver_nostatic',
     'gallery',
+    'cloudinary',
+    'storages',
 ]
+
 
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
@@ -133,6 +148,8 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # The location where static
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
+# Use Cloudinary for media storage
+DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 
 
 MEDIA_URL = '/media/'
