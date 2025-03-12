@@ -27,6 +27,8 @@ cycler==0.10.0
 cloudinary
 django-storages
 django-environ
+django-cloudinary-storage
+
 
 debugpy==1.6.7
 decorator==5.1.1

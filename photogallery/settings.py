@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
     'gallery',
     'cloudinary',
+    'cloudinary_storage',
     'storages',
 ]
 
