@@ -13,12 +13,8 @@ environ.Env.read_env()
 
 CLOUDINARY_URL = env('CLOUDINARY_URL')
 
-cloudinary.config(
-    cloud_name=env('CLOUDINARY_CLOUD_NAME'),
-    api_key=env('CLOUDINARY_API_KEY'),
-    api_secret=env('CLOUDINARY_API_SECRET')
-)
-
+# Cloudinary configuration
+cloudinary.config(cloudinary_url=CLOUDINARY_URL)
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
