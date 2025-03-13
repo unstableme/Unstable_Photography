@@ -20,14 +20,11 @@ cloudinary.config(cloudinary_url=CLOUDINARY_URL)
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
-
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-uh#marv=r*#2=e)mhab(f=2bs2ybbzp0vwa*u&92vd7%&znsvl'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['unstable-photography.onrender.com', '127.0.0.1', 'localhost', '192.168.101.2','192.168.101.3']
 
@@ -47,11 +44,12 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'whitenoise.runserver_nostatic',
-    'gallery',
+    'gallery',  # Make sure this is here
     'cloudinary',
     'cloudinary_storage',
     'storages',
 ]
+
 
 
 MIDDLEWARE = [
@@ -99,6 +97,7 @@ DATABASES = {
         'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
+
 
 
 # Password validation
