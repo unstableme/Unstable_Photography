@@ -12,10 +12,11 @@ env = environ.Env()
 environ.Env.read_env()
 
 CLOUDINARY_URL = env('CLOUDINARY_URL')
+print("CLOUDINARY_URL:", CLOUDINARY_URL)  # Debugging: Check if the URL is loaded correctly
 
 # Cloudinary configuration
 cloudinary.config(cloudinary_url=CLOUDINARY_URL)
-
+print("Cloudinary Config:", cloudinary.config().cloud_name)  # Should print your cloud name
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
