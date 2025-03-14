@@ -66,7 +66,7 @@ MIDDLEWARE = [
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = [BASE_DIR / "gallery/static"]
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # The location where static files will be stored after `collectstatic`
+STATIC_ROOT = BASE_DIR / "staticfiles"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
