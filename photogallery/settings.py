@@ -6,6 +6,8 @@ import cloudinary.uploader
 import cloudinary.api
 from django.conf import settings
 import environ
+import dj_database_url
+
 
 env = environ.Env()
 # Reading .env file
@@ -14,6 +16,10 @@ environ.Env.read_env()
 CLOUDINARY_URL = env('CLOUDINARY_URL')
 print("CLOUDINARY_URL:", CLOUDINARY_URL)  # Debugging: Check if the URL is loaded correctly
 
+
+# Debugging: Print Database URL
+DATABASE_URL = env('DATABASE_URL')
+print("DATABASE_URL:", DATABASE_URL)
 # Cloudinary configuration
 cloudinary.config(cloudinary_url=CLOUDINARY_URL)
 print("Cloudinary Config:", cloudinary.config().cloud_name)  # Should print your cloud name
@@ -25,7 +31,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-uh#marv=r*#2=e)mhab(f=2bs2ybbzp0vwa*u&92vd7%&znsvl'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ['unstable-photography.onrender.com', '127.0.0.1', 'localhost', '192.168.101.2','192.168.101.3']
 
@@ -93,13 +99,10 @@ WSGI_APPLICATION = 'photogallery.wsgi.application'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    'default': dj_database_url.config(default=env('DATABASE_URL'))  # Use `env()` to read DATABASE_URL
 }
-
-
+print("Cloudinary URL:", CLOUDINARY_URL)
+print("Database URL:", env('DATABASE_URL'))
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
