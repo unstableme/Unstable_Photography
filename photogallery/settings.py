@@ -14,15 +14,13 @@ env = environ.Env()
 environ.Env.read_env()
 
 CLOUDINARY_URL = env('CLOUDINARY_URL')
-print("CLOUDINARY_URL:", CLOUDINARY_URL)  # Debugging: Check if the URL is loaded correctly
-
 
 # Debugging: Print Database URL
 DATABASE_URL = env('DATABASE_URL')
-print("DATABASE_URL:", DATABASE_URL)
+
 # Cloudinary configuration
 cloudinary.config(cloudinary_url=CLOUDINARY_URL)
-print("Cloudinary Config:", cloudinary.config().cloud_name)  # Should print your cloud name
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -40,9 +38,6 @@ CSRF_TRUSTED_ORIGINS = [
     "https://*.cloudinary.com"  # Cloudinary domain for media files
 ]
 
-
-# Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -57,8 +52,6 @@ INSTALLED_APPS = [
     'storages',
 ]
 
-
-
 MIDDLEWARE = [
     'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.middleware.security.SecurityMiddleware',
@@ -70,7 +63,10 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
-STATICFILES_DIRS = [BASE_DIR / 'gallery/static']  # If you have a static folder in your project
+STATIC_URL = 'static/'
+
+STATICFILES_DIRS = [BASE_DIR / "gallery/static"]
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # The location where static files will be stored after `collectstatic`
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 
@@ -95,17 +91,10 @@ TEMPLATES = [
 WSGI_APPLICATION = 'photogallery.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
 DATABASES = {
-    'default': dj_database_url.config(default=env('DATABASE_URL'))  # Use `env()` to read DATABASE_URL
+    'default': dj_database_url.config(default='sqlite:///db.sqlite3')  # Fallback to SQLite
 }
-print("Cloudinary URL:", CLOUDINARY_URL)
-print("Database URL:", env('DATABASE_URL'))
 
-# Password validation
-# https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -123,9 +112,6 @@ AUTH_PASSWORD_VALIDATORS = [
 ]
 
 
-# Internationalization
-# https://docs.djangoproject.com/en/4.1/topics/i18n/
-
 LANGUAGE_CODE = 'en-us'
 
 TIME_ZONE = 'UTC'
@@ -135,16 +121,6 @@ USE_I18N = True
 USE_TZ = True
 
 
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/4.1/howto/static-files/
-
-
-
-STATIC_URL = 'static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')  # The location where static files will be stored after `collectstatic`
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
@@ -155,4 +131,3 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
 MEDIA_URL = '/media/'
 #MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
-STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
