@@ -198,6 +198,13 @@ body {
     box-sizing: border-box;
 }
 
+#about-image {
+    display: block; /* Ensures proper spacing */
+    margin: 0 auto; /* Centers the image */
+    max-width: 100%; /* Prevents the image from overflowing */
+    height: auto; /* Maintains aspect ratio */
+}
+
 #camera-section h1 {
     text-align: center;
 }
@@ -478,6 +485,10 @@ body {
 /* For Tab & Mobile Devices (small screens) */
 @media screen and (max-width: 768px) {
 
+    #about-image {
+        width: 90vw; /* 90% of the viewport width */
+    }
+
     .top-bar {
         display: flex;
         flex-direction: column;
@@ -620,6 +631,13 @@ body {
 
 @media screen and (max-width: 768px) {
 
+    #about-image {
+        width: auto; /* Keeps original width */
+        max-width: 98%; /* Limits size on larger screens */
+        border-radius: 10px;
+        margin-left: 0px;
+    }
+
     #main-content {
         margin-left: -200px;
     }
@@ -639,6 +657,14 @@ body {
 }
 
 @media (min-width: 769px) {
+
+    #about-image {
+        width: 400px; /* Keeps original width */
+        height: 500px;
+        max-width: 78%; /* Limits size on larger screens */
+        border-radius: 10px;
+        margin-left: 0px;
+    }
     .menu-icon {
         display: none !important;
     }
