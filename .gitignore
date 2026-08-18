@@ -1,2 +1,17 @@
+# Secrets - never commit
 .env
+.env.*
+!.env.example
+
+# Local database (production uses Neon Postgres)
+db.sqlite3
+
+# Python
 venv/
+__pycache__/
+*.pyc
+
+# Editor / OS noise
+.DS_Store
+*.bak
+requirements.full.txt.bak

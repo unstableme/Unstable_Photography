@@ -1,17 +1,26 @@
 import os
 from pathlib import Path
 
+import environ
+import dj_database_url
+
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent
+
+env = environ.Env()
+# Read .env FIRST, and with an explicit path.
+#   - explicit path: django-environ otherwise looks next to this file
+#     (photogallery/.env) rather than in the project root.
+#   - first: the cloudinary SDK reads CLOUDINARY_URL from the environment at
+#     import time, so the variables must exist before `import cloudinary`.
+# On Render these are real environment variables and this file simply isn't
+# there, which is a no-op.
+environ.Env.read_env(BASE_DIR / '.env')
+
 import cloudinary
 import cloudinary.uploader
 import cloudinary.api
 from django.conf import settings
-import environ
-import dj_database_url
-
-
-env = environ.Env()
-# Reading .env file
-environ.Env.read_env()
 
 CLOUDINARY_URL = env('CLOUDINARY_URL')
 
@@ -19,15 +28,15 @@ CLOUDINARY_URL = env('CLOUDINARY_URL')
 DATABASE_URL = env('DATABASE_URL')
 
 # Cloudinary configuration
-cloudinary.config(cloudinary_url=CLOUDINARY_URL)
-
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
+cloudinary.config(cloudinary_url=CLOUDINARY_URL, secure=True)
 
 SECRET_KEY = env('SECRET_KEY')
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+# SECURITY WARNING: never run with debug turned on in production - it leaks
+# tracebacks, settings and SQL to anyone who can trigger an error.
+# Defaults to off, so production is safe unless you deliberately opt in.
+# Escape hatch: set DEBUG=True in the Render dashboard to turn it back on.
+DEBUG = env.bool('DEBUG', default=False)
 
 ALLOWED_HOSTS = ['unstable-photography.onrender.com', '127.0.0.1', 'localhost', '192.168.101.2','192.168.101.3','192.168.18.185']
 
@@ -108,6 +117,26 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+
+# --- Production hardening (only applied when DEBUG is off) ---------------
+if not DEBUG:
+    # Render terminates TLS and forwards the original scheme in this header.
+    # Django needs it to know the request arrived over HTTPS.
+    SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https')
+
+    # Stop the session and CSRF cookies from ever crossing a plain HTTP link.
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
+
+    # Sensible low-risk defaults.
+    SECURE_CONTENT_TYPE_NOSNIFF = True
+    X_FRAME_OPTIONS = 'DENY'
+
+    # Left off deliberately - enable once you are sure the site is only ever
+    # reached over HTTPS:
+    #   SECURE_SSL_REDIRECT = True   # can loop if a proxy header is missing
+    #   SECURE_HSTS_SECONDS = 31536000   # HSTS is effectively irreversible
 
 
 LANGUAGE_CODE = 'en-us'
