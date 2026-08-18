@@ -38,12 +38,21 @@ SECRET_KEY = env('SECRET_KEY')
 # Escape hatch: set DEBUG=True in the Render dashboard to turn it back on.
 DEBUG = env.bool('DEBUG', default=False)
 
-ALLOWED_HOSTS = ['unstable-photography.onrender.com', '127.0.0.1', 'localhost', '192.168.101.2','192.168.101.3','192.168.18.185']
+# A leading dot matches every subdomain, which covers Vercel's per-deploy
+# preview URLs as well as the production one. Override with a comma-separated
+# ALLOWED_HOSTS env var if you add a custom domain.
+ALLOWED_HOSTS = env.list('ALLOWED_HOSTS', default=[
+    'unstable-photography.onrender.com',
+    '.vercel.app',
+    '127.0.0.1', 'localhost',
+    '192.168.101.2', '192.168.101.3', '192.168.18.185',
+])
 
-CSRF_TRUSTED_ORIGINS = [
+CSRF_TRUSTED_ORIGINS = env.list('CSRF_TRUSTED_ORIGINS', default=[
     "https://unstable-photography.onrender.com",
-    "https://*.cloudinary.com"  # Cloudinary domain for media files
-]
+    "https://*.vercel.app",
+    "https://*.cloudinary.com",  # Cloudinary domain for media files
+])
 
 INSTALLED_APPS = [
     'django.contrib.admin',
